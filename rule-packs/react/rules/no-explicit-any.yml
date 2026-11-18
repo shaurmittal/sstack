@@ -1,0 +1,9 @@
+id: no-explicit-any
+language: tsx
+severity: error
+message: "`any` turns off type checking for every value it touches."
+note: |
+  Name the real type. If the value comes from the network, storage, or user input, type it `unknown`, parse it where it enters the app, and use the parsed type. Use zod for the parsing if the repo already has it.
+rule:
+  kind: predefined_type
+  regex: "^any$"

@@ -1,0 +1,11 @@
+id: no-ts-ignore
+valid:
+  - |
+    // @ts-expect-error reason: vendor types are wrong; expires: 2027-01-01
+    const x: number = "a";
+invalid:
+  - |
+    // @ts-ignore
+    const x: number = "a";
+  - |
+    /* @ts-ignore */ const y: number = "b";

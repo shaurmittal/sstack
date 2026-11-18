@@ -1,0 +1,16 @@
+# Ruff codes lint-pack adds. Put the ones the repo doesn't already select into the
+# ruff command's --extend-select in lint/tools.json, not into pyproject.toml.
+# Move a code into [tool.ruff.lint] once its baseline count reaches zero.
+#
+#   E4, E7, E9, F   pyflakes and pycodestyle errors
+#   B               bugbear: likely bugs
+#   BLE             blind `except Exception`
+#   UP              modern syntax for the repo's Python version
+#   SIM             simpler equivalent code
+#   RUF             ruff's own checks, including unused `# noqa`
+#   PGH             `# type: ignore` and `# noqa` must name a code
+#   TID             tidy imports
+#
+# Type checker: if the repo runs none, add pyright in strict mode.
+[tool.pyright]
+typeCheckingMode = "strict"

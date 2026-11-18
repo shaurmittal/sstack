@@ -1,0 +1,15 @@
+id: no-explicit-any-py
+valid:
+  - |
+    def parse(raw: object) -> dict[str, int]: ...
+  - |
+    from typing import Any
+  - |
+    Any = 3
+invalid:
+  - |
+    def parse(raw: Any) -> dict[str, int]: ...
+  - |
+    def load() -> dict[str, typing.Any]: ...
+  - |
+    payload: list[Any] = []

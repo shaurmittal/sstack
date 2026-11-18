@@ -1,0 +1,9 @@
+id: no-ts-ignore
+language: tsx
+severity: error
+message: "@ts-ignore hides the error forever, even after it is fixed."
+note: |
+  Fix the type. If you can't, use `// @ts-expect-error reason: <why>; expires: YYYY-MM-DD`, which fails once the error is gone.
+rule:
+  kind: comment
+  regex: "@ts-ignore"

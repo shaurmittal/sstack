@@ -1,0 +1,5 @@
+ruleDirs: [rules]
+testConfigs:
+  - testDir: rule-tests
+languageGlobs:
+  tsx: ["*.ts", "*.js", "*.jsx", "*.mjs", "*.cjs", "*.mts", "*.cts"]

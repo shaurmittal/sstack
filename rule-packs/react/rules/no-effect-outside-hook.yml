@@ -1,0 +1,24 @@
+id: no-effect-outside-hook
+language: tsx
+severity: error
+message: useEffect is only allowed inside a named custom hook, a function whose name starts with `use`.
+note: |
+  Fix, in order of preference:
+  1. Derive the value during render instead of syncing it into state.
+  2. Do the work in the event handler that causes it.
+  3. Load server data with the repo's data hook instead of fetching in an effect.
+  4. Otherwise move the effect into a named hook such as useWindowSize and call that hook from the component.
+rule:
+  any:
+    - pattern: useEffect($$$)
+    - pattern: useLayoutEffect($$$)
+    - pattern: React.useEffect($$$)
+    - pattern: React.useLayoutEffect($$$)
+  not:
+    inside:
+      stopBy: end
+      any:
+        - kind: function_declaration
+          has: { field: name, regex: "^use[A-Z0-9]" }
+        - kind: variable_declarator
+          has: { field: name, regex: "^use[A-Z0-9]" }

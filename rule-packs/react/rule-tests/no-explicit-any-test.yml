@@ -1,0 +1,13 @@
+id: no-explicit-any
+valid:
+  - |
+    function parse(input: unknown): string { return String(input); }
+  - |
+    const company = "any";
+invalid:
+  - |
+    function parse(input: any) { return input; }
+  - |
+    const items: Array<any> = [];
+  - |
+    const x = y as any;

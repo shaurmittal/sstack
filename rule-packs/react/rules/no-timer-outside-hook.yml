@@ -1,0 +1,21 @@
+id: no-timer-outside-hook
+language: tsx
+severity: error
+message: setTimeout and setInterval in a component leak or fire after unmount. Call them only inside a named custom hook.
+note: |
+  Use a named hook such as useTimeout or useInterval whose cleanup clears the timer. For animation, let CSS or the animation library own the timing.
+files: ["**/*.tsx", "**/*.jsx"]
+rule:
+  any:
+    - pattern: setTimeout($$$)
+    - pattern: setInterval($$$)
+    - pattern: window.setTimeout($$$)
+    - pattern: window.setInterval($$$)
+  not:
+    inside:
+      stopBy: end
+      any:
+        - kind: function_declaration
+          has: { field: name, regex: "^use[A-Z0-9]" }
+        - kind: variable_declarator
+          has: { field: name, regex: "^use[A-Z0-9]" }

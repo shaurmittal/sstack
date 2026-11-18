@@ -1,0 +1,15 @@
+id: no-effect-outside-hook
+valid:
+  - |
+    function useClock() { useEffect(() => {}, []); }
+  - |
+    const useClock = () => { React.useEffect(() => {}, []); };
+  - |
+    export function useTicker(n: number) { useLayoutEffect(() => {}, [n]); }
+invalid:
+  - |
+    function Clock() { useEffect(() => {}, []); return null; }
+  - |
+    const Clock = () => { React.useLayoutEffect(() => {}); return null; };
+  - |
+    export default function Page() { useEffect(() => { fetch("/api"); }, []); return <div />; }

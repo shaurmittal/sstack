@@ -1,0 +1,13 @@
+id: no-explicit-any-py
+language: python
+severity: error
+message: "`Any` turns off type checking for every value it touches."
+note: |
+  Name the real type. Parse JSON, environment variables, and request bodies where they enter the program into a dataclass, TypedDict, or pydantic model, and pass that model inward. Use `object` when a function accepts any value.
+rule:
+  any:
+    - pattern: Any
+    - pattern: typing.Any
+  inside:
+    kind: type
+    stopBy: end
