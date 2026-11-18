@@ -14,6 +14,9 @@ Every problem from the baseline runs in [baseline-runs.md](baseline-runs.md). Th
 | typer | bug fix | A widened scope without asking. It fixed command and group help too, changing what the public `Command.help` attribute holds. That may be right, but the operator learned it after the work. | 4, judgment | `sstack-mode` bug-fix playbook: state the scope boundary before editing, and ask only when the change crosses a public API |
 | calhacks | refactor | The two arms picked opposite error semantics for the merged helper, swallow versus pass-through. Both were correct, and neither explained the choice before writing code. | 4, judgment | none. B's choice is the more composable one. Note for `python-practices` and `react-practices`: prefer helpers that pass errors through and let callers catch. |
 
+| calhacks, typer | refactor, bug fix | sstack-mode, first runs: both wiped their own uncommitted fix while breaking it on purpose. | 4, prose: commit before breaking | `sstack-mode`, patched 2026-11-17 |
+| calhacks, typer | refactor, bug fix | sstack-mode, first runs: neither wrote the size line or ran the comment step, and neither said so. | 4, prose, made checkable: an outcome line per step in the reply | `sstack-mode`, patched 2026-11-17 |
+
 ## What works as is
 
 - Reading `docs/harness/claude-code.md` first. Both B runs did, and pstack's model mapping worked: Comment Sicko ran as `opus medium` from `~/.claude/rules/pstack-models.md`.

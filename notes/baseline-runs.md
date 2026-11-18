@@ -50,3 +50,26 @@ The calhacks trap: `withTimeout` swallows a rejection, and `withinBudget` passes
 2. pstack's delegation never happened in Claude Code. Claude Code's own system prompt tells the agent not to spawn agents unless the user asks, and that beat the playbook's "mandatory" in both B runs.
 3. pstack added fewer comments: 4 and 0 lines against 10 and 8.
 4. Plain Claude Code on Opus 5.5 already verifies a lot. Both A runs broke their own changes on purpose to check the tests. The difference is that B commits the evidence, and A sometimes deletes it.
+
+## sstack-mode, first runs (2026-11-17)
+
+Same prompts and base commits, run as `/sstack:sstack-mode` with sstack and pstack loaded. Branch `baseline/S` in each repo.
+
+| | calhacks A | calhacks B | calhacks S | typer A | typer B | typer S |
+|---|---|---|---|---|---|---|
+| Minutes | 3.7 | 10.0 | 3.7 | 13.1 | 11.1 | 4.8 |
+| Cost, USD | 1.07 | 3.11 | 1.05 | 3.05 | 2.52 | 0.98 |
+| Turns | 21 | 61 | 23 | 56 | 53 | 26 |
+| Source lines | +43 −38 | +32 −48 | +33 −48 | +51 −22 | +11 −8 | +14 −7 |
+| Test lines | +52 | +129 | +118 | +240 | +72 | +67 |
+| Pin or failing test committed first | no | yes | yes | no | yes | yes |
+| Broke the change on purpose | yes | yes | yes | yes | yes | yes |
+| Third race folded in or scope kept narrow | left | folded | folded | widened | narrow | narrow |
+
+Both S runs picked the small path, ran no subagents, and ended with the branch and the `gh pr create` command instead of opening a PR.
+
+**What went wrong:**
+- Both S runs wiped their own uncommitted fix while breaking it on purpose, then reapplied it. SKILL.md now says to commit first, then break, then restore with `git checkout`.
+- Neither run wrote the size line or ran the comment step, and neither said it skipped them. SKILL.md now requires a four-line first message, an outcome for every step at the end of the reply, and an inline comment check on the small path.
+
+These patches are untested. Friday's eval is their first run.
