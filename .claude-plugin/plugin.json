@@ -1,0 +1,8 @@
+{
+  "name": "sstack",
+  "version": "0.1.0",
+  "description": "Skills that push coding agents toward code a principal engineer would approve, for Python, React, and JavaScript repos.",
+  "author": { "name": "shaurmittal" },
+  "repository": "https://github.com/shaurmittal/sstack",
+  "license": "MIT"
+}

@@ -1,0 +1,14 @@
+{
+  "name": "sstack",
+  "owner": {
+    "name": "shaurmittal"
+  },
+  "description": "sstack: principal-engineer skills for Claude Code.",
+  "plugins": [
+    {
+      "name": "sstack",
+      "source": "./",
+      "description": "Skills that push coding agents toward code a principal engineer would approve, for Python, React, and JavaScript repos."
+    }
+  ]
+}
