@@ -103,7 +103,7 @@ Build in this order. Each line says when the skill is done.
 
 | Skill | What it does | Done when |
 |---|---|---|
-| `lint-pack` | Installs the starter rule pack for the repo's stack, then turns one correction into a new rule whose error message names the fix. React and JS: ESLint `no-restricted-syntax` and `no-restricted-imports`, plus dependency-cruiser for folder boundaries. Python: ruff, strict pyright, and import-linter. Custom patterns in either language: ast-grep. | Each rule has a bad-example fixture that it fails on and a good one it passes, and both run in CI. |
+| `lint-pack` | Installs the starter rule pack for the repo's stack, then turns one correction into a new rule whose error message names the fix. Code patterns and banned imports in both languages: ast-grep. Folder boundaries: dependency-cruiser with the swc parser for JS/TS, import-linter for Python. Python rule sets: ruff. Existing violations go in `lint/baseline.json`, and CI fails only when a count goes up. | Each rule has a bad-example fixture that it fails on and a good one it passes, and both run in CI. |
 | `python-practices` | Python counterpart to pstack's `typescript-best-practices`: typing discipline, dataclasses and pydantic at boundaries, no bare `except`, and the repo's own conventions read from the code. | One baseline task redone with it produces fewer gap-log entries. |
 | `react-practices` | Bans `useEffect` in product code except inside named wrappers, bans imperative timers, keeps derived state out of state, and prefers server data hooks. Every rule that can be linted is in `lint-pack`, and this skill keeps only the judgment parts. | Same as above, on the React repo. |
 | `property-tests` | Finds a function or component with an invariant and writes property tests with Hypothesis (Python) or fast-check (JS). Each property is shown failing on a broken variant first. | One property in a baseline repo catches a seeded bug. |
@@ -137,6 +137,14 @@ Six tasks is a small sample. Treat the numbers as a direction, not proof.
 
 1. **UI registry first.** Build your own shadcn registry (`registry.json`) of improved components, borrowing from 21st.dev where useful. Check each component's states with Playwright screenshots and pstack's visual-parity playbook.
 2. **Pipeline.** Spec, then plan, then build, then verify, then PR, chained from `sstack-mode`. Plan it in the project thread once the skills have passed Friday's test. A sloppy loop automated is still sloppy, so the pipeline waits for the foundation.
+
+## Decisions log
+
+- **2026-11-17.** Baseline repos are `calhacks` (React, Next 16, TypeScript 7, 38 vitest files) and `fastapi/typer` (Python, strict mypy). No Python repo of ours has tests.
+- **2026-11-17.** Skipped the rest of Wednesday's study and built `lint-pack` before the baseline run. The gap log still decides which pstack skills get forked.
+- **2026-11-17.** lint-pack uses ast-grep, not ESLint. typescript-eslint only supports TypeScript below 6.1, and calhacks is on TypeScript 7. ast-grep parses any version, and `ast-grep test` runs each rule's bad and good examples in CI.
+- **2026-11-17.** dependency-cruiser runs with `parser: "swc"`. Its default parser read zero `.ts` files under TypeScript 7 and still reported no violations.
+- **2026-11-17.** No Fable models anywhere. Code work stays on Opus. Sonnet only fills the former Fable seat in pstack's review panels.
 
 ## Risks
 
