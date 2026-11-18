@@ -68,6 +68,12 @@ class SuppressionTests(unittest.TestCase):
             out = subprocess.run([sys.executable, str(Path(cs.__file__)), "--json", str(gen)], capture_output=True, text=True)
             self.assertEqual(len(json.loads(out.stdout)), 1)
 
+    def test_skips_its_own_source(self):
+        script = Path(cs.__file__).resolve()
+        self.assertNotEqual(cs.check_text("x", script.read_text(), TODAY, 180), [], "the pattern list itself looks like suppressions")
+        out = subprocess.run([sys.executable, str(script), "--json", str(script)], capture_output=True, text=True)
+        self.assertEqual(json.loads(out.stdout), [])
+
     def test_plain_comments_pass(self):
         self.assertEqual(self.check("# this mentions types but ignores nothing\nx = 1"), [])
 

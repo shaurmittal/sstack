@@ -72,9 +72,10 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("paths", nargs="*", type=Path)
     args = ap.parse_args(argv)
 
+    this_file = Path(__file__).resolve()
     found = []
     for path in args.paths or tracked_files():
-        if any(fnmatch.fnmatch(path.as_posix(), g) for g in args.exclude):
+        if path.resolve() == this_file or any(fnmatch.fnmatch(path.as_posix(), g) for g in args.exclude):
             continue
         try:
             text = path.read_text(encoding="utf-8")

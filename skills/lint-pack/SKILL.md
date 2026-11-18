@@ -89,11 +89,12 @@ Work on a branch. Never commit to the default branch.
 2. Try a higher level first, and say why it fails before you go lower:
    - Architecture: can the wrong thing become impossible to write? Stop exporting the internal, give the state one owner, or delete the old way.
    - Types: can the type system reject it?
-   If one works, propose it to the operator instead of a lint rule.
+   If one works, propose it to the operator instead of a lint rule. Often the answer is both. A mistake repeats when two files do the same job and only one got the fix. Then move the job into one owner file, and write a rule that bans going around the owner, such as "only `lib/claude.ts` may import the SDK".
 3. Write the rule in `lint/ast-grep/rules/<id>.yml`, unless it is a folder boundary, which goes in step 5 of `install`.
    - `message` says what is wrong in one sentence.
    - `note` names the fix: the file, function, hook, or type to use instead.
    - Match the smallest pattern that catches every instance from step 1.
+   - An owner rule lists the owner file, and test files that mock it, in `ignores`. Nothing else goes in `ignores`.
 4. Write `lint/ast-grep/rule-tests/<id>-test.yml`. Use at least two `invalid` cases trimmed from the real instances, and at least one `valid` case that shows the fix from `note`.
 5. Prove the test can fail. Break the rule, for example by deleting a condition, and confirm `ast-grep test --skip-snapshot-tests` fails. Restore the rule and confirm it passes.
 6. Run `python3 lint/baseline.py check`. If the repo already has instances, fix them when the fix is mechanical. Otherwise add only the new rule's counts to `lint/baseline.json`, and list the files in your reply as open work.
